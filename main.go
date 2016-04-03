@@ -31,5 +31,11 @@ func main() {
 		return
 	}
 
-	fmt.Println(lastalive.CalculateLastAlive(*n))
+	out, err := lastalive.CalculateLastAlive(*n)
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("The number of person who will be alive is:", out)
 }
