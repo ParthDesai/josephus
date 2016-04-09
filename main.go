@@ -8,7 +8,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/ParthDesai/josephus/lastalive"
+	"github.com/ParthDesai/josephus/simulator"
 )
 
 // Get N from the command line
@@ -31,11 +31,9 @@ func main() {
 		return
 	}
 
-	out, err := lastalive.CalculateLastAlive(*n)
+	circle := new(simulator.CircleOfDeath)
 
-	if err != nil {
-		panic(err)
-	}
+	circle.Init(*n, 1)
 
-	fmt.Println("The number of person who will be alive is:", out)
+	fmt.Println("The number of person who will be alive is:", circle.Execute())
 }
