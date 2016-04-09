@@ -17,6 +17,10 @@ type CircleOfDeath struct {
 
 func (c *CircleOfDeath) Init(numberOfPeople uint64, stepPerKill int) {
 
+	if numberOfPeople < 1 {
+		panic(fmt.Errorf("Number of people should be greater than or equal to 1. Found:%d", numberOfPeople))
+	}
+
 	if uint64(c.stepPerKill) >= numberOfPeople {
 		panic(fmt.Errorf("Step per kill should be less then number of people."+
 			" Found: NumberOfPeople:%d StepPerKill:%d", numberOfPeople, stepPerKill))
