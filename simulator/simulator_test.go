@@ -33,6 +33,6 @@ func TestSimulator(t *testing.T) {
 	output := circle.Execute()
 
 	if output.LastAlive != 6 {
-		t.Error("Expected 7. Got:", output)
+		t.Error("Expected 6. Got:", output)
 	}
 }
