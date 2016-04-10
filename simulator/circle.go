@@ -8,18 +8,24 @@ const (
 	completed  = iota
 )
 
+// Result is used to indicate the result of the simulation.
+// LastAlive referes to the position of the person, who will be lastalive.
+// KillingOrder referes to the position, in which the killing  was performed.
 type Result struct {
 	LastAlive    int
 	KillingOrder []int
 }
 
+// CircleOfDeath represents a circle in josephus problem.
+// This object is responsible to run the simulation, and return the result.
 type CircleOfDeath struct {
 	people      []Person
 	stepPerKill int
-
-	lastAlive uint64
 }
 
+// Init initializes the CircleOfDeath.
+// It takes two argument, first is the number of people in the circle
+// Second is steps per kill.
 func (c *CircleOfDeath) Init(numberOfPeople uint64, stepPerKill int) {
 
 	if numberOfPeople < 1 {
@@ -83,6 +89,8 @@ func (c *CircleOfDeath) findNextAlive(index int) int {
 	return nextAliveIndex
 }
 
+// Execute executes the simulation
+// It returns Result struct instance.
 func (c *CircleOfDeath) Execute() Result {
 
 	i := c.findFirstAlive()
