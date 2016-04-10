@@ -8,6 +8,11 @@ const (
 	completed  = iota
 )
 
+type Result struct {
+	LastAlive    int
+	KillingOrder []int
+}
+
 type CircleOfDeath struct {
 	people      []Person
 	stepPerKill int
@@ -21,7 +26,7 @@ func (c *CircleOfDeath) Init(numberOfPeople uint64, stepPerKill int) {
 		panic(fmt.Errorf("Number of people should be greater than or equal to 1. Found:%d", numberOfPeople))
 	}
 
-	if uint64(c.stepPerKill) >= numberOfPeople {
+	if uint64(stepPerKill) >= numberOfPeople {
 		panic(fmt.Errorf("Step per kill should be less then number of people."+
 			" Found: NumberOfPeople:%d StepPerKill:%d", numberOfPeople, stepPerKill))
 	}
@@ -78,21 +83,27 @@ func (c *CircleOfDeath) findNextAlive(index int) int {
 	return nextAliveIndex
 }
 
-func (c *CircleOfDeath) Execute() int {
+func (c *CircleOfDeath) Execute() Result {
 
 	i := c.findFirstAlive()
+
+	result := Result{}
+	result.KillingOrder = make([]int, 0)
 
 	if i == -1 {
 		panic(fmt.Errorf("Inconsistent state. No body is alive."))
 	}
 
 	for j := c.findNextAlive(i); i != j; {
-		fmt.Println("Killing:", j)
 		c.people[j].Kill()
+
+		result.KillingOrder = append(result.KillingOrder, j)
 
 		i = c.findNextAlive(i)
 		j = c.findNextAlive(i)
 	}
 
-	return c.people[i].GetPosition()
+	result.LastAlive = c.people[i].GetPosition()
+
+	return result
 }

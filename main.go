@@ -35,5 +35,5 @@ func main() {
 
 	circle.Init(*n, 1)
 
-	fmt.Println("The number of person who will be alive is:", circle.Execute())
+	fmt.Println("The number of person who will be alive is:", circle.Execute().LastAlive)
 }
